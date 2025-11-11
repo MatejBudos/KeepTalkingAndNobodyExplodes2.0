@@ -43,7 +43,7 @@ public class Button : MonoBehaviour
     // | Modrý        | 4                                       |
     // | Biely        | 1                                       |
     // | Žltý         | 5                                       |
-    // | Iný          | 1                                       |
+    // | Iný          | 3                                       |
 
     void Start()
     {
@@ -132,7 +132,7 @@ public class Button : MonoBehaviour
         }
         else if ((stripeColor == Color.yellow || stripeColor == Color.green ||
         stripeColor == Color.magenta || stripeColor == Color.red) &&
-        (s.Contains("1") || m.Contains("1")))
+        (s.Contains('3') || m.Contains('3')))
         {
             detonated = true;
             Debug.Log("DETONATED");
