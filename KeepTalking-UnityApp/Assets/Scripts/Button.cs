@@ -19,7 +19,7 @@ public class Button : MonoBehaviour
 
     // Možné farby a texty pre náhodnú generáciu
     private Color[] buttonColors = new Color[] { Color.red, Color.blue, Color.white, Color.yellow };
-    private Color[] stripeColors = new Color[] { Color.red, Color.blue, Color.white, Color.yellow };
+    private Color[] stripeColors = new Color[] { Color.red, Color.blue, Color.white, Color.yellow, Color.green, Color.violet };
     private string[] buttonTexts = new string[] { "PRESS", "HOLD", "ABORT", "DETONATE" };
 
     private Color buttonColor;
@@ -27,13 +27,15 @@ public class Button : MonoBehaviour
     private string buttontext;
     private bool firstPartSolved = false;
     private bool detonated = false;
+    private Timer timer;
+    public Renderer LED;
     
     [Header("References")]
     public Renderer buttonRenderer; // odkaz na samotný button (cube)             
     // | ------------------------------------------------------------------ | ----------------------------- |
-    // | Ak je tlačidlo **modré** a má text **"ABORT" alebo PRESS**                     | Podrž tlačidlo a sleduj pásik.|
+    // | Ak je tlačidlo **modré** a má text **"ABORT" alebo PRESS**         | Podrž tlačidlo a sleduj pásik.|
     // | Ak je tlačidlo **biele** a text je PRESS alebo DETONATE**          | Podrž tlačidlo a sleduj pasik.|
-    // | Ak je tlačidlo **žlté a text NIE je ABORT**                                            | Podrž tlačidlo a sleduj pasik.|
+    // | Ak je tlačidlo **žlté a text NIE je ABORT**                        | Podrž tlačidlo a sleduj pasik.|
     // | Ak je tlačidlo **červené** a text **"HOLD"**                       | Stlač a **okamžite pusť**.    |
     // | Inak                                                               | Stlač a **okamžite pusť**.    |
     //| Farba pásika | Pusť tlačidlo, keď časovač má číslo ... |
@@ -46,6 +48,14 @@ public class Button : MonoBehaviour
     void Start()
     {
 
+        if (timer == null)
+        {
+            timer = FindFirstObjectByType<Timer>();
+            if (timer == null)
+            {
+                Debug.LogWarning("[Button] Timer not found in scene!");
+            }
+        }
         // Náhodná farba tlačidla
         if (buttonRenderer != null)
         {
@@ -79,6 +89,10 @@ public class Button : MonoBehaviour
                 OnHold();
             }
         }
+        if (detonated)
+        {
+            LED.material.color = Color.lightGreen;
+        }
     }
 
     void OnMouseDown()
@@ -93,9 +107,43 @@ public class Button : MonoBehaviour
         stripeRenderer.material.color = Color.black;
         isMouseDown = false;
         if (!isHeld)
+        {
             OnClick();
-        
+            return;
+        }
+        if (!firstPartSolved) return;
+
+        string s = timer.currentSeconds.ToString();
+        string m = timer.currentMinutes.ToString();
+        if (stripeColor == Color.blue && (s.Contains('4') || m.Contains('4')))
+        {
+            detonated = true;
+            Debug.Log("DETONATED");
+        }
+        else if (stripeColor == Color.white && (s.Contains('1') || m.Contains('1')))
+        {
+            detonated = true;
+            Debug.Log("DETONATED");
+        }
+        else if (stripeColor == Color.yellow && (s.Contains('5') || m.Contains('5')))
+        {
+            detonated = true;
+            Debug.Log("DETONATED");
+        }
+        else if ((stripeColor == Color.yellow || stripeColor == Color.green ||
+        stripeColor == Color.magenta || stripeColor == Color.red) &&
+        (s.Contains("1") || m.Contains("1")))
+        {
+            detonated = true;
+            Debug.Log("DETONATED");
+        }
+        else
+        {
+            firstPartSolved = false;
+            Debug.Log("INCORRECT");
+        }
     }
+
 
     void OnClick()
     {
