@@ -241,6 +241,7 @@ MonoBehaviour:
   holdThreshold: 0.5
   stripeRenderer: {fileID: 7074091384037331372}
   textLabel: {fileID: 2153684074610418399}
+  buttonRenderer: {fileID: 2401352047138634182}
 --- !u!1 &2995479300632065919
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,12 +29,11 @@ public class Button : MonoBehaviour
     private bool detonated = false;
     
     [Header("References")]
-    public Renderer buttonRenderer; // odkaz na samotný button (cube)
-    //PodmienkaAkcia hráča                   
+    public Renderer buttonRenderer; // odkaz na samotný button (cube)             
     // | ------------------------------------------------------------------ | ----------------------------- |
-    // | Ak je tlačidlo **modré** a má text **"ABORT"**                     | Podrž tlačidlo a sleduj pásik.|
+    // | Ak je tlačidlo **modré** a má text **"ABORT" alebo PRESS**                     | Podrž tlačidlo a sleduj pásik.|
     // | Ak je tlačidlo **biele** a text je PRESS alebo DETONATE**          | Podrž tlačidlo a sleduj pasik.|
-    // | Ak je tlačidlo **žlté**                                            | Podrž tlačidlo a sleduj pasik.|
+    // | Ak je tlačidlo **žlté a text NIE je ABORT**                                            | Podrž tlačidlo a sleduj pasik.|
     // | Ak je tlačidlo **červené** a text **"HOLD"**                       | Stlač a **okamžite pusť**.    |
     // | Inak                                                               | Stlač a **okamžite pusť**.    |
     //| Farba pásika | Pusť tlačidlo, keď časovač má číslo ... |
@@ -91,38 +90,65 @@ public class Button : MonoBehaviour
 
     void OnMouseUp()
     {
+        stripeRenderer.material.color = Color.black;
         isMouseDown = false;
         if (!isHeld)
             OnClick();
+        
     }
 
     void OnClick()
     {
-        Debug.Log($"{name}: CLICK");
-        if (buttonColor == Color.yellow)
+        if (detonated)
         {
-            detonated = true;
+            return;
         }
-        else if (buttonColor == Color.red && buttontext == "HOLD")
+        Debug.Log($"{name}: CLICK");
+
+        if (buttonColor == Color.red && buttontext == "HOLD")
         {
             detonated = true;
+            Debug.Log("DETONATED");
+        }
+        else if ((buttonColor == Color.blue && (buttontext == "ABORT" || buttontext == "PRESS")) ||
+        (buttonColor == Color.white && (buttontext == "PRESS" || buttontext == "DETONATE")) ||
+        (buttonColor == Color.yellow && buttontext != "ABORT"))
+        {
+            Debug.Log("INCORRECT");
+        }
+        else
+        {
+            detonated = true;
+            Debug.Log("DETONATED");
         }
       
     }
 
     void OnHold()
     {
+        if (detonated)
+        {
+            return;
+        }
         Debug.Log($"{name}: HOLD");
-        if (buttonColor == Color.blue && buttontext == "ABORT")
+        if (buttonColor == Color.blue && (buttontext == "ABORT" || buttontext == "PRESS"))
         {
             stripeRenderer.material.color = stripeColor;
             firstPartSolved = true;
+            Debug.Log("CORRECT");
 
         }
         else if (buttonColor == Color.white && (buttontext == "PRESS" || buttontext == "DETONATE"))
         {
             stripeRenderer.material.color = stripeColor;
             firstPartSolved = true;
+            Debug.Log("CORRECT");
+        }
+        else if (buttonColor == Color.yellow && buttontext != "ABORT")
+        {
+            stripeRenderer.material.color = stripeColor;
+            firstPartSolved = true;
+            Debug.Log("CORRECT");
         }
         else
         {
