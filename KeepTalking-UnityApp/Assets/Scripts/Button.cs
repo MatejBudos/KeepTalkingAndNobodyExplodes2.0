@@ -111,7 +111,7 @@ public class Button : MonoBehaviour
             OnClick();
             return;
         }
-        if (!firstPartSolved) return;
+        if (!firstPartSolved) Debug.Log("INCORRECT");
 
         string s = timer.currentSeconds.ToString();
         string m = timer.currentMinutes.ToString();
