@@ -5,6 +5,8 @@ public class Timer : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] float remainingTime;
+    public int currentSeconds;
+    public int currentMinutes;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,8 +28,9 @@ public class Timer : MonoBehaviour
         {
             remainingTime = 0;
         }
-        int minutes = Mathf.FloorToInt(remainingTime / 60);
-        int seconds = Mathf.FloorToInt(remainingTime % 60);
-        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);   
+
+        currentMinutes = Mathf.FloorToInt(remainingTime / 60);
+        currentSeconds = Mathf.FloorToInt(remainingTime % 60);
+        timerText.text = string.Format("{0:00}:{1:00}", currentMinutes, currentSeconds);   
     }
 }

@@ -77,20 +77,7 @@ public class PlayerMovement : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
-        if (Input.GetMouseButtonDown(0)) // ľavé tlačidlo myši
-        {
-            Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // stred obrazovky
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 3f)) // 3f = dosah interakcie
-            {
-                Interactable interactable = hit.collider.GetComponent<Interactable>();
-                if (interactable != null)
-                {
-                    interactable.Interact();
-                }
-            }
-        }
+       
     }
     void OnGUI()
     {
