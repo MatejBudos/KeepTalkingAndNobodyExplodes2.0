@@ -7,8 +7,8 @@ public class BombScript : MonoBehaviour
 
     void OnMouseDrag()
     {
-        float XaxisRotation = Input.GetAxis("Mouse X") * rotationSpeed;
-        float YaxisRotation = Input.GetAxis("Mouse Y") * rotationSpeed;
+        float XaxisRotation = Input.GetAxis("Mouse Y") * rotationSpeed;
+        float YaxisRotation = Input.GetAxis("Mouse X") * rotationSpeed;
 
         transform.Rotate(Vector3.right, XaxisRotation);
         transform.Rotate(Vector3.up, YaxisRotation);
