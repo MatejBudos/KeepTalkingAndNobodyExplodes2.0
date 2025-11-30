@@ -75,6 +75,7 @@ public class MazePlayer : MonoBehaviour
             parentModule.walls[mapPos].Contains(mapNextPos))
         {
             //TODO add strike
+            BombScript.strikes++;
             Debug.Log("you have hit a wall");
             return false;
         }
