@@ -111,7 +111,11 @@ public class Button : MonoBehaviour
             OnClick();
             return;
         }
-        if (!firstPartSolved) Debug.Log("INCORRECT");
+        if (!firstPartSolved)
+        {
+            BombScript.strikes++;
+            Debug.Log("INCORRECT");
+        } 
 
         string s = timer.currentSeconds.ToString();
         string m = timer.currentMinutes.ToString();
@@ -140,6 +144,7 @@ public class Button : MonoBehaviour
         else
         {
             firstPartSolved = false;
+            BombScript.strikes++;
             Debug.Log("INCORRECT");
         }
     }
@@ -162,6 +167,7 @@ public class Button : MonoBehaviour
         (buttonColor == Color.white && (buttontext == "PRESS" || buttontext == "DETONATE")) ||
         (buttonColor == Color.yellow && buttontext != "ABORT"))
         {
+            BombScript.strikes++;
             Debug.Log("INCORRECT");
         }
         else
@@ -200,6 +206,7 @@ public class Button : MonoBehaviour
         }
         else
         {
+            BombScript.strikes++;
             Debug.Log("INCORRECT");
         }
         
