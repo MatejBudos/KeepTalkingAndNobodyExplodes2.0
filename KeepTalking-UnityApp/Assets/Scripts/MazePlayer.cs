@@ -66,7 +66,7 @@ public class MazePlayer : MonoBehaviour
             return false;
         }
 
-        // pozicie su naopak v mape a pri hracovi tak tuto konverzia pozor
+        // map and player (x,y) inverted
         Vector2Int mapPos     = new Vector2Int(gridPos.y, gridPos.x);
         Vector2Int mapNextPos = new Vector2Int(newPos.y, newPos.x);
 
@@ -74,7 +74,6 @@ public class MazePlayer : MonoBehaviour
         if (parentModule.walls.ContainsKey(mapPos) &&
             parentModule.walls[mapPos].Contains(mapNextPos))
         {
-            //TODO add strike
             BombScript.strikes++;
             Debug.Log("you have hit a wall");
             return false;

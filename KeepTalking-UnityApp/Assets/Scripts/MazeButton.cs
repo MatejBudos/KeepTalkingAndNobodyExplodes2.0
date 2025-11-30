@@ -5,7 +5,7 @@ public class MazeButton : MonoBehaviour
 {
     public MazeModule targetModule;
 
-    public Vector2Int direction; // direction this button moves the player
+    public Vector2Int direction;
     public MazePlayer targetPlayer;
 
 

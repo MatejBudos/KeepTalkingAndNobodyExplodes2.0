@@ -10,7 +10,7 @@ public class MazeGridGenerator : MonoBehaviour
     public MazePlayer playerPrefab;    // White dot prefab
     public GameObject endDotPrefab;    // Red dot for ending position
 
-    public GameObject mazeTypePrefab;
+    public GameObject mazeTypePrefab;  
 
     public GameObject buttonUp;
     public GameObject buttonDown;
@@ -56,7 +56,6 @@ public class MazeGridGenerator : MonoBehaviour
             }
         }
 
-        // Place end dot (optional)
         if (endDotPrefab != null)
         {
             Vector2Int endPos = new Vector2Int(gridSize - 1, gridSize - 1);
@@ -84,10 +83,10 @@ public class MazeGridGenerator : MonoBehaviour
 
         if (mazeTypePrefab != null)
         {
-            GameObject mazeObj = Instantiate(mazeTypePrefab, cellsRoot); // same as player & end dot
+            GameObject mazeObj = Instantiate(mazeTypePrefab, cellsRoot); 
             Vector3 worldPos = cells[randomPos.x, randomPos.y].transform.localPosition;
             mazeObj.transform.localPosition = new Vector3(
-                worldPos.x + 0.05f, // small offset like white/red dot
+                worldPos.x + 0.05f,
                 worldPos.y,
                 worldPos.z
             );
@@ -101,7 +100,7 @@ public class MazeGridGenerator : MonoBehaviour
             return;
         }
 
-        // Instantiate the player as a child of the module (so localPosition works naturally)
+       
         MazePlayer playerObj = Instantiate(playerPrefab, module.transform);
         playerObj.SetParentModule(module);
         
@@ -110,12 +109,12 @@ public class MazeGridGenerator : MonoBehaviour
         playerObj.transform.SetParent(cellsRoot);
         Vector3 startPosWorld = cells[startPos.x, startPos.y].transform.localPosition;
         playerObj.transform.localPosition = new Vector3(
-            startPosWorld.x + 0.05f,
+            startPosWorld.x + 0.06f,
             startPosWorld.y,
             startPosWorld.z
         );
 
-        // Assign the player to the module
+       
         module.SetPlayer(playerObj);
 
         if (moduleLEDPrefab != null)

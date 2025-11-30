@@ -19,10 +19,9 @@ public class ModuleGenerator : MonoBehaviour
         if (bomb == null || modulePrefabs.Length == 0)
             return;
 
-        // The bomb center (world space)
+        // The bomb center
         Vector3 center = bomb.transform.position;
 
-        // Target world positions for each button
         Vector3[] worldPositions =
         {
             new Vector3(center.x + xOffset, center.y, center.z + zOffset), // front 1
@@ -46,11 +45,9 @@ public class ModuleGenerator : MonoBehaviour
             GameObject prefab = modulePrefabs[randomInt];
             GameObject module = Instantiate(prefab);
 
-            // Set world position & rotation FIRST
             module.transform.position = worldPositions[i];
             module.transform.rotation = rotations[i];
 
-            // Then parent to bomb (preserve world transform)
             module.transform.SetParent(bomb.transform, true);
         }
     }

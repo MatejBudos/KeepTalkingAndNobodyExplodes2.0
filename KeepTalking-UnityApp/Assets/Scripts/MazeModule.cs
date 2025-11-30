@@ -9,7 +9,7 @@ public class MazeModule : MonoBehaviour
     public Vector2Int mazeTypePosition;
     public GameObject mazeTypeObject;
 
-    public GameObject LEDObject;       // the sphere instance
+    public GameObject LEDObject;      
     public Vector2Int LEDPosition;
     public int gridSize;
 
@@ -94,7 +94,6 @@ public class MazeModule : MonoBehaviour
     }
 
 
-    // Called by MazeGridGenerator when instantiating the player
     public void SetPlayer(MazePlayer newPlayer)
     {
         if (newPlayer == null)

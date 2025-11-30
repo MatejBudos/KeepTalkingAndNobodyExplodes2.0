@@ -30,7 +30,7 @@ public class MazeWallParser : MonoBehaviour
 
                 int charIndex = col * 2;
 
-                // -------- CHECK RIGHT --------
+                // CHECK RIGHT
                 if (col + 1 < size)
                 {
                     if (charIndex + 1 >= line.Length || line[charIndex + 1] == '|')
@@ -40,7 +40,7 @@ public class MazeWallParser : MonoBehaviour
                     }
                 }
 
-                // -------- CHECK LEFT --------
+                // CHECK LEFT
                 if (col - 1 >= 0)
                 {
                     if (charIndex - 1 < 0 || line[charIndex - 1] == '|')
@@ -50,7 +50,7 @@ public class MazeWallParser : MonoBehaviour
                     }
                 }
 
-                // -------- CHECK ABOVE --------
+                // CHECK ABOVE
                 int hRowAbove = row - 1;
                 if (hRowAbove >= 0)
                 {
@@ -62,7 +62,7 @@ public class MazeWallParser : MonoBehaviour
                     }
                 }
 
-                // -------- CHECK BELOW --------
+                // CHECK BELOW
                 int hRowBelow = row + 1;
                 if (hRowBelow < totalRows)
                 {

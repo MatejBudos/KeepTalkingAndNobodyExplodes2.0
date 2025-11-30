@@ -11,9 +11,7 @@ public class BombSlots : MonoBehaviour
 
     void Start()
     {
-        // získame veľkosť bomby (cube)
         bombSize = GetComponent<Renderer>().bounds.size;
-
         CreateSlots();
     }
     void CreateSlots()
