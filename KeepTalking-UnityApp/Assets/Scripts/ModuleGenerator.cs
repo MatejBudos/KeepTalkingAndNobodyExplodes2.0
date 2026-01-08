@@ -5,9 +5,9 @@ public class ModuleGenerator : MonoBehaviour
     public GameObject bomb;
     public GameObject[] modulePrefabs;
 
-    public float xOffset = 0.5f;
+    public float xOffset = 0.25f;
 
-    public float zOffset = 0.75f;
+    public float zOffset = 0.2f;
 
     void Start()
     {

@@ -1,11 +1,11 @@
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using UnityEngine.XR.Interaction.Toolkit;
 
-public class Button : MonoBehaviour
+public class ButtonModule : MonoBehaviour
 {
     [Header("Hold Settings")]
-    public float holdThreshold = 0.5f;
+    public float holdThreshold = 2f;
 
     [Header("Stripe Settings")]
     public Renderer stripeRenderer;
@@ -25,29 +25,20 @@ public class Button : MonoBehaviour
     private Color buttonColor;
     private Color stripeColor;
     private string buttontext;
+
     private bool firstPartSolved = false;
     private bool detonated = false;
     private Timer timer;
+
     public Renderer LED;
-    
+
     [Header("References")]
-    public Renderer buttonRenderer; // odkaz na samotný button (cube)             
-    // | ------------------------------------------------------------------ | ----------------------------- |
-    // | Ak je tlačidlo **modré** a má text **"ABORT" alebo PRESS**         | Podrž tlačidlo a sleduj pásik.|
-    // | Ak je tlačidlo **biele** a text je PRESS alebo DETONATE**          | Podrž tlačidlo a sleduj pasik.|
-    // | Ak je tlačidlo **žlté a text NIE je ABORT**                        | Podrž tlačidlo a sleduj pasik.|
-    // | Ak je tlačidlo **červené** a text **"HOLD"**                       | Stlač a **okamžite pusť**.    |
-    // | Inak                                                               | Stlač a **okamžite pusť**.    |
-    //| Farba pásika | Pusť tlačidlo, keď časovač má číslo ... |
-    // | ------------ | --------------------------------------- |
-    // | Modrý        | 4                                       |
-    // | Biely        | 1                                       |
-    // | Žltý         | 5                                       |
-    // | Iný          | 3                                       |
+    public Renderer buttonRenderer;
 
-    void Start()
+    // ------------------------------------------------------------
+
+    public void Start()
     {
-
         if (timer == null)
         {
             timer = FindFirstObjectByType<Timer>();
@@ -56,19 +47,19 @@ public class Button : MonoBehaviour
                 Debug.LogWarning("[Button] Timer not found in scene!");
             }
         }
+
         // Náhodná farba tlačidla
         if (buttonRenderer != null)
         {
             buttonColor = buttonColors[Random.Range(0, buttonColors.Length)];
             buttonRenderer.material.color = buttonColor;
         }
-            
+
         // Náhodná farba pásiku
         if (stripeRenderer != null)
         {
             stripeColor = stripeColors[Random.Range(0, stripeColors.Length)];
-            //stripeRenderer.material.color = stripeColor;
-        } 
+        }
 
         // Náhodný text
         if (textLabel != null)
@@ -76,10 +67,11 @@ public class Button : MonoBehaviour
             buttontext = buttonTexts[Random.Range(0, buttonTexts.Length)];
             textLabel.text = buttontext;
         }
-           
     }
 
-    void Update()
+    // ------------------------------------------------------------
+
+    public void Update()
     {
         if (isMouseDown && !isHeld)
         {
@@ -89,36 +81,56 @@ public class Button : MonoBehaviour
                 OnHold();
             }
         }
+
         if (detonated)
         {
             LED.material.color = Color.lightGreen;
         }
     }
+    // | ------------------------------------------------------------------ | ----------------------------- | // 
+    // | Ak je tlačidlo **modré** a má text **"ABORT" alebo PRESS**     | Podrž tlačidlo a sleduj pásik.| // 
+    // | Ak je tlačidlo **biele** a text je PRESS alebo DETONATE**      | Podrž tlačidlo a sleduj pasik.| // 
+    // | Ak je tlačidlo **žlté a text NIE je ABORT**                    | Podrž tlačidlo a sleduj pasik.| // 
+    // | Ak je tlačidlo **červené** a text **"HOLD"**                   | Stlač a **okamžite pusť**. |
+    // | Inak                                                           | Stlač a **okamžite pusť**. | 
+    // 
+    // 
+    // //| Farba pásika | Pusť tlačidlo, keď časovač má číslo ... | // 
+    // | ------------ | --------------------------------------- | // 
+    // | Modrý | 4 | 
+    // | Biely | 1 | // 
+    // | Žltý | 5 | // 
+    // | Iný | 3 |
 
-    void OnMouseDown()
+    // ================= XR SIMPLE INTERACTABLE =================
+
+    public void OnSelectEntered()
     {
         isMouseDown = true;
         isHeld = false;
         mouseDownTime = Time.time;
     }
 
-    void OnMouseUp()
+    public void OnSelectExited()
     {
         stripeRenderer.material.color = Color.black;
         isMouseDown = false;
+
         if (!isHeld)
         {
             OnClick();
             return;
         }
+
         if (!firstPartSolved)
         {
             BombScript.strikes++;
             Debug.Log("INCORRECT");
-        } 
+        }
 
         string s = timer.currentSeconds.ToString();
         string m = timer.currentMinutes.ToString();
+
         if (stripeColor == Color.blue && (s.Contains('4') || m.Contains('4')))
         {
             detonated = true;
@@ -135,8 +147,8 @@ public class Button : MonoBehaviour
             Debug.Log("DETONATED");
         }
         else if ((stripeColor == Color.yellow || stripeColor == Color.green ||
-        stripeColor == Color.magenta || stripeColor == Color.red) &&
-        (s.Contains('3') || m.Contains('3')))
+                  stripeColor == Color.magenta || stripeColor == Color.red) &&
+                  (s.Contains('3') || m.Contains('3')))
         {
             detonated = true;
             Debug.Log("DETONATED");
@@ -149,13 +161,15 @@ public class Button : MonoBehaviour
         }
     }
 
+    // ================= LOGIKA =================
 
-    void OnClick()
+    public void OnClick()
     {
         if (detonated)
         {
             return;
         }
+
         Debug.Log($"{name}: CLICK");
 
         if (buttonColor == Color.red && buttontext == "HOLD")
@@ -164,8 +178,8 @@ public class Button : MonoBehaviour
             Debug.Log("DETONATED");
         }
         else if ((buttonColor == Color.blue && (buttontext == "ABORT" || buttontext == "PRESS")) ||
-        (buttonColor == Color.white && (buttontext == "PRESS" || buttontext == "DETONATE")) ||
-        (buttonColor == Color.yellow && buttontext != "ABORT"))
+                 (buttonColor == Color.white && (buttontext == "PRESS" || buttontext == "DETONATE")) ||
+                 (buttonColor == Color.yellow && buttontext != "ABORT"))
         {
             BombScript.strikes++;
             Debug.Log("INCORRECT");
@@ -175,22 +189,22 @@ public class Button : MonoBehaviour
             detonated = true;
             Debug.Log("DETONATED");
         }
-      
     }
 
-    void OnHold()
+    public void OnHold()
     {
         if (detonated)
         {
             return;
         }
+
         Debug.Log($"{name}: HOLD");
+
         if (buttonColor == Color.blue && (buttontext == "ABORT" || buttontext == "PRESS"))
         {
             stripeRenderer.material.color = stripeColor;
             firstPartSolved = true;
             Debug.Log("CORRECT");
-
         }
         else if (buttonColor == Color.white && (buttontext == "PRESS" || buttontext == "DETONATE"))
         {
@@ -209,7 +223,5 @@ public class Button : MonoBehaviour
             BombScript.strikes++;
             Debug.Log("INCORRECT");
         }
-        
-        
     }
 }
