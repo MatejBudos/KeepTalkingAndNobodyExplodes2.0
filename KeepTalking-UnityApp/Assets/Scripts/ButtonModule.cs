@@ -124,7 +124,7 @@ public class ButtonModule : MonoBehaviour
 
         if (!firstPartSolved)
         {
-            BombScript.strikes++;
+            BombManager.strikes++;
             Debug.Log("INCORRECT");
         }
 
@@ -156,7 +156,7 @@ public class ButtonModule : MonoBehaviour
         else
         {
             firstPartSolved = false;
-            BombScript.strikes++;
+            BombManager.strikes++;
             Debug.Log("INCORRECT");
         }
     }
@@ -181,7 +181,7 @@ public class ButtonModule : MonoBehaviour
                  (buttonColor == Color.white && (buttontext == "PRESS" || buttontext == "DETONATE")) ||
                  (buttonColor == Color.yellow && buttontext != "ABORT"))
         {
-            BombScript.strikes++;
+            BombManager.strikes++;
             Debug.Log("INCORRECT");
         }
         else
@@ -220,7 +220,7 @@ public class ButtonModule : MonoBehaviour
         }
         else
         {
-            BombScript.strikes++;
+            BombManager.strikes++;
             Debug.Log("INCORRECT");
         }
     }

@@ -1,9 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BombScript : MonoBehaviour
+public class BombManager : MonoBehaviour
 {
-    public float rotationSpeed = 1f;
-    public static int strikes = 0;
+    public static int strikes;
 
     public Renderer strike1a;
     public Renderer strike1b;
@@ -11,17 +11,11 @@ public class BombScript : MonoBehaviour
     public Renderer strike2b;
     public Renderer strike3a;
     public Renderer strike3b;
+    public List<GameObject> modulePrefabs;
+    public List<Transform> moduleContainers;
  
-    void OnMouseDrag()
-    {
-        float XaxisRotation = Input.GetAxis("Mouse Y") * -rotationSpeed;
-        float YaxisRotation = Input.GetAxis("Mouse X") * -rotationSpeed;
 
-        transform.Rotate(Vector3.right, XaxisRotation);
-        transform.Rotate(Vector3.up, YaxisRotation);
-    }
-
-    void Update()
+    public void Update()
     {
         if (strikes > 0)
         {
@@ -44,6 +38,25 @@ public class BombScript : MonoBehaviour
         }
     }
 
+    public void Start()
+    {
+        strikes = 0;
+        GenerateModules();
+    }
+
+
+    public void GenerateModules()
+    {
+        foreach (Transform t in moduleContainers)
+        {
+            int moduleIndex = Random.Range(0, 2);
+
+            GameObject module = Instantiate(modulePrefabs[moduleIndex],t.position, t.rotation,t);
+
+
+            
+        }
+    }
 
 
 }
