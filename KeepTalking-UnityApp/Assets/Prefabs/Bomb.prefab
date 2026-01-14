@@ -210,8 +210,8 @@ MonoBehaviour:
   strike3a: {fileID: 5055492775759711932}
   strike3b: {fileID: 7539785181292986953}
   modulePrefabs:
-  - {fileID: 1420416567541691852, guid: 39b0e28aac7adb94d96ae3a94e9349ff, type: 3}
   - {fileID: 902576798909001694, guid: 02c256fc8cffe2e48ba202f4960685f8, type: 3}
+  - {fileID: 9105520501375593859, guid: 9e333d715bfc5d1458cfa21766457be0, type: 3}
   moduleContainers:
   - {fileID: 1682329718804952798}
   - {fileID: 1104973653515047213}

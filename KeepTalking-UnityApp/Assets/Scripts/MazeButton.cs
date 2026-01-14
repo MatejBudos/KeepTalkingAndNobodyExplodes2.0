@@ -9,7 +9,7 @@ public class MazeButton : MonoBehaviour
     public MazePlayer targetPlayer;
 
 
-    void OnMouseDown()
+    public void OnMouseDown()
     {
         Debug.Log($"Button clicked. targetModule={targetModule}, targetModule.player={targetModule?.player}");
         targetModule?.MovePlayer(direction);
