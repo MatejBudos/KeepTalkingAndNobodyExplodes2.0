@@ -29,9 +29,13 @@ public class StartMenuScript : MonoBehaviour
         teleportProvider.QueueTeleportRequest(request);
     }
 
-    public void ClickedButton()
+
+    public void ClickedButton(int moduleCount)
     {
-        Debug.Log("CLICKED");
+        Debug.Log($"Clicked level button → {moduleCount} modules");
+
         Teleport();
+        BombManager.Instance.GenerateModules(moduleCount);
     }
+
 }
