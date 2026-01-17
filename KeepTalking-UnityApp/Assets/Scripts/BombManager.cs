@@ -13,6 +13,11 @@ public class BombManager : MonoBehaviour
     public Renderer strike3b;
     public List<GameObject> modulePrefabs;
     public List<Transform> moduleContainers;
+
+    public GameObject emptyModulePrefab;
+
+
+    public static BombManager Instance;
  
 
     public void Update()
@@ -41,17 +46,78 @@ public class BombManager : MonoBehaviour
     public void Start()
     {
         strikes = 0;
-        GenerateModules();
+    }
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
     }
 
 
-    public void GenerateModules()
+    public void GenerateModules(int moduleCount)
     {
-        foreach (Transform t in moduleContainers)
-        {
-            int moduleIndex = Random.Range(0, 3);
+        strikes = 0;
+        ClearModules();
 
-            GameObject module = Instantiate(modulePrefabs[moduleIndex],t.position, t.rotation,t);     
+        moduleCount = Mathf.Min(moduleCount, moduleContainers.Count);
+
+
+        List<Transform> shuffledContainers = new List<Transform>(moduleContainers);
+        ShuffleContainers(shuffledContainers);
+
+        // Place modules
+        for (int i = 0; i < moduleCount; i++)
+        {
+            Transform container = shuffledContainers[i];
+            int moduleIndex = Random.Range(0, modulePrefabs.Count);
+
+            Instantiate(
+                modulePrefabs[moduleIndex],
+                container.position,
+                container.rotation,
+                container
+            );
+        }
+
+        // Fill remaining slots with empty modules
+        for (int i = moduleCount; i < shuffledContainers.Count; i++)
+        {
+            Transform container = shuffledContainers[i];
+
+            Instantiate(
+                emptyModulePrefab,
+                container.position,
+                container.rotation,
+                container
+            );
+        }
+    }
+
+
+
+    void ClearModules()
+    {
+        foreach (Transform container in moduleContainers)
+        {
+            for (int i = container.childCount - 1; i >= 0; i--)
+            {
+                Destroy(container.GetChild(i).gameObject);
+            }
+        }
+    }
+
+    void ShuffleContainers(List<Transform> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            int randomIndex = Random.Range(i, list.Count);
+            (list[i], list[randomIndex]) = (list[randomIndex], list[i]);
         }
     }
 
