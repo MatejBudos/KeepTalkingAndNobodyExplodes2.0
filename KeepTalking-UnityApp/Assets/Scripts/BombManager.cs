@@ -51,10 +51,7 @@ public class BombManager : MonoBehaviour
         {
             int moduleIndex = Random.Range(0, modulePrefabs.Count);
 
-            GameObject module = Instantiate(modulePrefabs[moduleIndex],t.position, t.rotation,t);
-
-
-            
+            GameObject module = Instantiate(modulePrefabs[moduleIndex],t.position, t.rotation,t);     
         }
     }
 

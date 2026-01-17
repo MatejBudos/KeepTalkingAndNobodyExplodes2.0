@@ -17,7 +17,7 @@ public class SimonTileClick : MonoBehaviour
         }
     }
 
-    void OnMouseDown()
+    public void OnMouseDown()
     {
         if (module != null)
         {
