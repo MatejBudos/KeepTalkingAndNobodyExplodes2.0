@@ -49,7 +49,7 @@ public class BombManager : MonoBehaviour
     {
         foreach (Transform t in moduleContainers)
         {
-            int moduleIndex = Random.Range(0, 3);
+            int moduleIndex = Random.Range(0, modulePrefabs.Count);
 
             GameObject module = Instantiate(modulePrefabs[moduleIndex],t.position, t.rotation,t);     
         }
