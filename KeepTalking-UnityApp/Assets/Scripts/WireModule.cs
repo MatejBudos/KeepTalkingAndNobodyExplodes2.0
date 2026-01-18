@@ -5,37 +5,39 @@ using UnityEngine;
 public class WireModule : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public List<WireNodePair> wires = new List<WireNodePair>();
+    public List<WireNodePair> wires;
     int wireCount; // 3–6
-    public List<Color> potentialColors = new List<Color>{Color.red, 
-                                                        Color.blue, 
-                                                        Color.yellow, 
-                                                        Color.white, 
-                                                        Color.green};
-    public List<WireNodePair> ActiveWires = new List<WireNodePair>();
+    public List<Color> potentialColors; 
+    public List<WireNodePair> ActiveWires;
     public int correctIndex;
     public Renderer LED;
     public bool detonated = false;
     void Start()
     {
-        wireCount  = Random.Range(3, 7);
-        wires = wires.OrderBy( x => Random.value ).ToList( );
+        potentialColors = new List<Color>{Color.red, 
+                                        Color.blue, 
+                                        Color.yellow, 
+                                        Color.white, 
+                                        Color.green};
+        ActiveWires = new List<WireNodePair>();
+        wireCount = Random.Range(3, 7);
+        Debug.Log("Wire Count" + wireCount);
         for ( int i = 0; i < wires.Count; i++)
         {
             if( i < wireCount)
             {
                 WireNodePair wire = wires[i];
-                Color c = potentialColors[Random.Range(0,5)];
-                wire.SetColor(c);
-                Debug.Log(i + "color" + wire.color.ToString());
+                Color col = potentialColors[Random.Range(0,5)];
+                wire.SetColor(col);
+                // Debug.Log(i + "color" + wire.color.ToString());
                 ActiveWires.Add( wire );
             }
             else
             {
                 wires[i].DisablePair();
+                Debug.Log("Disabled wire" + i);
             }
         }
-        ActiveWires = ActiveWires.OrderBy( x => x.index ).ToList( );
         correctIndex = CorrectWireIndex();
         Debug.Log("Intended index : " + correctIndex);
 
@@ -51,24 +53,9 @@ public class WireModule : MonoBehaviour
         }
     }
 
-
-    public void CheckCutAttempt( WireNodePair pair)
+    public int getAnswer()
     {
-        for( int i = 0; i < ActiveWires.Count; i++)
-        {
-            if ( ActiveWires[i].index == pair.index)
-            {
-                if(i == this.correctIndex)
-                {
-                    pair.Cut();
-                    Debug.Log("Correct");
-                    detonated = true;
-                    return;
-                }
-            }
-        }
-        Debug.Log("Incorrect");
-
+        return correctIndex >= 0 ? correctIndex : -1;
     }
 
 

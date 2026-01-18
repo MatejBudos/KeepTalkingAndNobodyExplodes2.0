@@ -42,13 +42,23 @@ public class WireNodePair : MonoBehaviour
         renderer.material = new Material(Shader.Find("Unlit/Color"));
         renderer.material.color = newColor;
 
-        Debug.Log(cylinder.name + " color set to " + newColor);
+        // Debug.Log(cylinder.name + " color set to " + newColor);
     }
 
     public void CutAttempt()
     {
         Debug.Log("TriedToCut the cable!!!");
-        module.CheckCutAttempt(this);
+        int answ = module.getAnswer();
+        if (answ == this.index)
+        {
+            module.detonated = true;   
+            Cut();
+            Debug.Log("Correct");
+            return;
+        }
+        Debug.Log("Incorrect");
+        Debug.Log("Correct index was " + answ + "you clicked "+ this.index);
+        
 
     }
     public void DisablePair()
