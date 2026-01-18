@@ -19,7 +19,7 @@ public class ButtonModule : MonoBehaviour
 
     // Možné farby a texty pre náhodnú generáciu
     private Color[] buttonColors = new Color[] { Color.red, Color.blue, Color.white, Color.yellow };
-    private Color[] stripeColors = new Color[] { Color.red, Color.blue, Color.white, Color.yellow, Color.green, Color.violet };
+    private Color[] stripeColors = new Color[] { Color.red, Color.blue, Color.white, Color.yellow, Color.green, Color.magenta };
     private string[] buttonTexts = new string[] { "PRESS", "HOLD", "ABORT", "DETONATE" };
 
     private Color buttonColor;
@@ -31,6 +31,7 @@ public class ButtonModule : MonoBehaviour
     private Timer timer;
 
     public Renderer LED;
+    public bool invalidTry = false;
 
     [Header("References")]
     public Renderer buttonRenderer;
@@ -115,7 +116,13 @@ public class ButtonModule : MonoBehaviour
     {
         stripeRenderer.material.color = Color.black;
         isMouseDown = false;
-
+        
+        if (invalidTry)
+        {
+            invalidTry = false;
+            isHeld = false;
+            return;
+        }
         if (!isHeld)
         {
             OnClick();
@@ -146,7 +153,8 @@ public class ButtonModule : MonoBehaviour
             detonated = true;
             Debug.Log("DETONATED");
         }
-        else if ((stripeColor == Color.yellow || stripeColor == Color.green ||
+
+        else if ((stripeColor == Color.green ||
                   stripeColor == Color.magenta || stripeColor == Color.red) &&
                   (s.Contains('3') || m.Contains('3')))
         {
@@ -156,9 +164,11 @@ public class ButtonModule : MonoBehaviour
         else
         {
             firstPartSolved = false;
+            
             BombManager.strikes++;
             Debug.Log("INCORRECT");
         }
+        isHeld = false;
     }
 
     // ================= LOGIKA =================
@@ -221,6 +231,7 @@ public class ButtonModule : MonoBehaviour
         else
         {
             BombManager.strikes++;
+            invalidTry = true;
             Debug.Log("INCORRECT");
         }
     }
