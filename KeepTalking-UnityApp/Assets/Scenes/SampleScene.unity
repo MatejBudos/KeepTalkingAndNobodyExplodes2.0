@@ -335,15 +335,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7129620615275104804, guid: 5b5b4aac034b633428d657d9287c7350, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.14921774
+      value: 0.17149594
       objectReference: {fileID: 0}
     - target: {fileID: 7129620615275104804, guid: 5b5b4aac034b633428d657d9287c7350, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.37634236
+      value: 0.43253025
       objectReference: {fileID: 0}
     - target: {fileID: 7129620615275104804, guid: 5b5b4aac034b633428d657d9287c7350, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.65601283
+      value: 0.75395554
       objectReference: {fileID: 0}
     - target: {fileID: 7129620615275104804, guid: 5b5b4aac034b633428d657d9287c7350, type: 3}
       propertyPath: m_LocalPosition.x
@@ -626,7 +626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1480,8 +1480,8 @@ MonoBehaviour:
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
-  m_TrackPosition: 0
-  m_SmoothPosition: 0
+  m_TrackPosition: 1
+  m_SmoothPosition: 1
   m_SmoothPositionAmount: 8
   m_TightenPosition: 0.1
   m_TrackRotation: 1

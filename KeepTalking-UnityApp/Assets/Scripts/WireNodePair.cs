@@ -8,6 +8,7 @@ public class WireNodePair : MonoBehaviour
     public Transform MidPoint;
     public WireModule module;
     public Color color;
+    public Material glow;
     public int index;
 
     public void Start()
@@ -73,6 +74,57 @@ public class WireNodePair : MonoBehaviour
         MidPoint.gameObject.SetActive(false);
        
     }
+    public void HoverOn()
+    {
+        AddGlow(L);
+        AddGlow(MidPoint);
+        AddGlow(R);
+    }
+
+    public void HoverOff()
+    {
+        RemoveGlow(L);
+        RemoveGlow(MidPoint);
+        RemoveGlow(R);
+    }
+    private void AddGlow(Transform cylinder)
+    {
+        if (cylinder == null) return;
+
+        MeshRenderer r = cylinder.GetComponent<MeshRenderer>();
+        if (r == null) return;
+
+        Material[] mats = r.materials;
+
+        // už tam glow je → nič nerob
+        if (mats.Length > 1)
+            return;
+
+        Material[] newMats = new Material[2];
+        newMats[0] = mats[0];   // pôvodný material
+        newMats[1] = glow;     // glow ako druhý
+
+        r.materials = newMats;
+    }
+    private void RemoveGlow(Transform cylinder)
+    {
+        if (cylinder == null) return;
+
+        MeshRenderer r = cylinder.GetComponent<MeshRenderer>();
+        if (r == null) return;
+
+        Material[] mats = r.materials;
+
+        // už je len base material
+        if (mats.Length == 1)
+            return;
+
+        Material[] newMats = new Material[1];
+        newMats[0] = mats[0];   // ponechaj base
+
+        r.materials = newMats;
+    }
+
 
 
 }
