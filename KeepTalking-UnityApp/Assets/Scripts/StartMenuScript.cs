@@ -7,6 +7,7 @@ public class StartMenuScript : MonoBehaviour
     [SerializeField] private TeleportationProvider teleportProvider;
     [SerializeField] private Transform teleportTarget;
     [SerializeField] private Transform xrOrigin;
+    [SerializeField] private GameManager gameManager;
     void Start()
     {
         
@@ -35,7 +36,8 @@ public class StartMenuScript : MonoBehaviour
         Debug.Log($"Clicked level button → {moduleCount} modules");
 
         Teleport();
-        BombManager.Instance.GenerateModules(moduleCount);
+        gameManager.StartGame(moduleCount);
+        //BombManager.Instance.GenerateModules(moduleCount);
     }
 
 }

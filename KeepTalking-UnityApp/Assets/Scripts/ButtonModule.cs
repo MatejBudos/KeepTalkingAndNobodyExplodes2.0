@@ -27,7 +27,7 @@ public class ButtonModule : MonoBehaviour
     private string buttontext;
 
     private bool firstPartSolved = false;
-    private bool detonated = false;
+    private bool defused = false;
     private Timer timer;
 
     public Renderer LED;
@@ -83,7 +83,7 @@ public class ButtonModule : MonoBehaviour
             }
         }
 
-        if (detonated)
+        if (defused)
         {
             LED.material.color = Color.lightGreen;
         }
@@ -105,6 +105,7 @@ public class ButtonModule : MonoBehaviour
 
     // ================= XR SIMPLE INTERACTABLE =================
 
+
     public void OnSelectEntered()
     {
         isMouseDown = true;
@@ -116,6 +117,10 @@ public class ButtonModule : MonoBehaviour
     {
         stripeRenderer.material.color = Color.black;
         isMouseDown = false;
+        if (defused)
+        {
+            return;
+        }
         
         if (invalidTry)
         {
@@ -131,7 +136,7 @@ public class ButtonModule : MonoBehaviour
 
         if (!firstPartSolved)
         {
-            BombManager.strikes++;
+            BombManager.OnWrongClick?.Invoke();
             Debug.Log("INCORRECT");
         }
 
@@ -140,42 +145,47 @@ public class ButtonModule : MonoBehaviour
 
         if (stripeColor == Color.blue && (s.Contains('4') || m.Contains('4')))
         {
-            detonated = true;
-            Debug.Log("DETONATED");
+            defused = true;
+            Debug.Log("defused");
         }
         else if (stripeColor == Color.white && (s.Contains('1') || m.Contains('1')))
         {
-            detonated = true;
-            Debug.Log("DETONATED");
+            defused = true;
+            Debug.Log("defused");
         }
         else if (stripeColor == Color.yellow && (s.Contains('5') || m.Contains('5')))
         {
-            detonated = true;
-            Debug.Log("DETONATED");
+            defused = true;
+            Debug.Log("defused");
         }
 
         else if ((stripeColor == Color.green ||
                   stripeColor == Color.magenta || stripeColor == Color.red) &&
                   (s.Contains('3') || m.Contains('3')))
         {
-            detonated = true;
-            Debug.Log("DETONATED");
+            defused = true;
+            Debug.Log("defused");
         }
         else
         {
             firstPartSolved = false;
             
-            BombManager.strikes++;
+            BombManager.OnWrongClick?.Invoke();
             Debug.Log("INCORRECT");
         }
         isHeld = false;
+
+        if (defused)
+        {
+            BombManager.SolvedModule?.Invoke();
+        }
     }
 
     // ================= LOGIKA =================
 
     public void OnClick()
     {
-        if (detonated)
+        if (defused)
         {
             return;
         }
@@ -184,26 +194,31 @@ public class ButtonModule : MonoBehaviour
 
         if (buttonColor == Color.red && buttontext == "HOLD")
         {
-            detonated = true;
-            Debug.Log("DETONATED");
+            defused = true;
+            Debug.Log("defused");
         }
         else if ((buttonColor == Color.blue && (buttontext == "ABORT" || buttontext == "PRESS")) ||
                  (buttonColor == Color.white && (buttontext == "PRESS" || buttontext == "DETONATE")) ||
                  (buttonColor == Color.yellow && buttontext != "ABORT"))
         {
-            BombManager.strikes++;
+            BombManager.OnWrongClick?.Invoke();
             Debug.Log("INCORRECT");
         }
         else
         {
-            detonated = true;
-            Debug.Log("DETONATED");
+            defused = true;
+            Debug.Log("defused");
+        }
+
+        if (defused)
+        {
+            BombManager.SolvedModule?.Invoke();
         }
     }
 
     public void OnHold()
     {
-        if (detonated)
+        if (defused)
         {
             return;
         }
@@ -230,7 +245,7 @@ public class ButtonModule : MonoBehaviour
         }
         else
         {
-            BombManager.strikes++;
+            BombManager.OnWrongClick?.Invoke();
             invalidTry = true;
             Debug.Log("INCORRECT");
         }

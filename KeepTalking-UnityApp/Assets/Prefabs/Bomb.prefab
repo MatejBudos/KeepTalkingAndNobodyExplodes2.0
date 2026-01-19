@@ -106,9 +106,9 @@ Transform:
   m_GameObject: {fileID: 6312243251577605856}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04622, y: 2.48365, z: -1.112}
-  m_LocalScale: {x: 1, y: 1.7515, z: 2.7037}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.30861112, y: 0.54053235, z: 0.8343919}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1086870928759523376}
   - {fileID: 4713001015350562136}
@@ -213,6 +213,7 @@ MonoBehaviour:
   - {fileID: 902576798909001694, guid: 02c256fc8cffe2e48ba202f4960685f8, type: 3}
   - {fileID: 9105520501375593859, guid: 9e333d715bfc5d1458cfa21766457be0, type: 3}
   - {fileID: 5543823157404677517, guid: ec6ca7287383c0b4cb020ccf9b2ae2c1, type: 3}
+  - {fileID: 1320438006720936567, guid: f20edcc475965ea448bab816e7f98aea, type: 3}
   moduleContainers:
   - {fileID: 1682329718804952798}
   - {fileID: 1104973653515047213}
@@ -226,7 +227,10 @@ MonoBehaviour:
   - {fileID: 8229753441001743569}
   - {fileID: 5757829156433820680}
   - {fileID: 1750790468141533783}
-  emptyModulePrefab: {fileID: 0}
+  emptyModulePrefab: {fileID: 1969790618671589745, guid: a2fde8acbd73d0f418e89a6046fbe696, type: 3}
+  numOfModules: 0
+  solvedModules: 0
+  gameManager: {fileID: 0}
 --- !u!1001 &103127806032807366
 PrefabInstance:
   m_ObjectHideFlags: 0

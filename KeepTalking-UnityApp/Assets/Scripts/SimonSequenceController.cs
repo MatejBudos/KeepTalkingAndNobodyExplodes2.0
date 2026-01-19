@@ -36,7 +36,7 @@ public class SimonSequenceController : MonoBehaviour
     private List<int> expectedSequence = new List<int>();
     private int playerInputIndex = 0;
 
-    private bool solved = false;
+    private bool defused = false;
 
 
     void Start()
@@ -90,7 +90,7 @@ public class SimonSequenceController : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        while (!solved)
+        while (!defused)
         {
             // Lock input while showing sequence
             inputEnabled = false;
@@ -165,16 +165,17 @@ public class SimonSequenceController : MonoBehaviour
             // Sequence completed successfully
             if (playerInputIndex >= expectedSequence.Count)
             {
-                Debug.Log($"Module '{gameObject.name}' solved input sequence!");
+                Debug.Log($"Module '{gameObject.name}' defused input sequence!");
                 inputEnabled = false;
-                solved = true;
+                defused = true;
+                BombManager.SolvedModule?.Invoke();
                 LED.material.color = Color.lightGreen;
             }
         }
         else
         {
             Debug.Log($"Wrong input on module '{gameObject.name}'!");
-            BombManager.strikes++;
+            BombManager.OnWrongClick?.Invoke();
 
             inputEnabled = false;
             playerInputIndex = 0;

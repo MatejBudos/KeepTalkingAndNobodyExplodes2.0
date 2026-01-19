@@ -44,7 +44,7 @@ public class MazePlayer : MonoBehaviour
         if (IsAtGoal())
         {
             Debug.Log("you reached the goal");
-            parentModule.setSolved();
+            parentModule.setdefused();
         }
     }
 
@@ -74,7 +74,7 @@ public class MazePlayer : MonoBehaviour
         if (parentModule.walls.ContainsKey(mapPos) &&
             parentModule.walls[mapPos].Contains(mapNextPos))
         {
-            BombManager.strikes++;
+            BombManager.OnWrongClick?.Invoke();
             Debug.Log("you have hit a wall");
             return false;
         }

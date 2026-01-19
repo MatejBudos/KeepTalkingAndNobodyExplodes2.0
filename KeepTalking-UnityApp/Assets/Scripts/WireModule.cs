@@ -11,7 +11,7 @@ public class WireModule : MonoBehaviour
     public List<WireNodePair> ActiveWires;
     public int correctIndex;
     public Renderer LED;
-    public bool detonated = false;
+    public bool defused = false;
     void Start()
     {
         potentialColors = new List<Color>{Color.red, 
@@ -47,7 +47,7 @@ public class WireModule : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (detonated)
+        if (defused)
         {
             LED.material.color = Color.lightGreen;
         }

@@ -17,7 +17,7 @@ public class MazeModule : MonoBehaviour
     public float cellWidth;
 
     public float cellStep; 
-    bool solved = false;
+    bool defused = false;
 
     string[] map0 = new string[] // (2,3)
     {
@@ -75,7 +75,7 @@ public class MazeModule : MonoBehaviour
 
     void Update()
     {
-        if (solved)
+        if (defused)
         {
             if (LEDObject != null)
                 LEDObject.GetComponent<Renderer>().material.color = Color.green;
@@ -84,7 +84,7 @@ public class MazeModule : MonoBehaviour
     
    public void MovePlayer(Vector2Int direction)
     {
-        if (solved) return;
+        if (defused) return;
         if (player == null)
         {
             Debug.LogWarning("MazeModule: No MazePlayer assigned!");
@@ -103,8 +103,10 @@ public class MazeModule : MonoBehaviour
         player = newPlayer;
         player.SetParentModule(this); 
     }
-    public void setSolved()
+    public void setdefused()
     {
-        solved = true;
+        defused = true;
+        BombManager.SolvedModule?.Invoke();
+
     }
 }

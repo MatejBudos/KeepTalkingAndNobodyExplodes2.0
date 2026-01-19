@@ -48,17 +48,23 @@ public class WireNodePair : MonoBehaviour
 
     public void CutAttempt()
     {
+        if (module.defused)
+        {
+            return;
+        }
         Debug.Log("TriedToCut the cable!!!");
         int answ = module.getAnswer();
         if (answ == this.index)
         {
-            module.detonated = true;   
+            module.defused = true;   
+            BombManager.SolvedModule?.Invoke();
             Cut();
             Debug.Log("Correct");
             return;
         }
         Debug.Log("Incorrect");
         Debug.Log("Correct index was " + answ + "you clicked "+ this.index);
+        BombManager.OnWrongClick?.Invoke();
         
 
     }
@@ -96,7 +102,7 @@ public class WireNodePair : MonoBehaviour
 
         Material[] mats = r.materials;
 
-        // už tam glow je → nič nerob
+     
         if (mats.Length > 1)
             return;
 
@@ -120,7 +126,7 @@ public class WireNodePair : MonoBehaviour
             return;
 
         Material[] newMats = new Material[1];
-        newMats[0] = mats[0];   // ponechaj base
+        newMats[0] = mats[0];   
 
         r.materials = newMats;
     }
