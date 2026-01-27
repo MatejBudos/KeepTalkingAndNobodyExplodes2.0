@@ -44,7 +44,40 @@ public class MazeModule : MonoBehaviour
         "  _ _ _",   
         "0 0 0 0",   
         "_ _   _",  
-        "0 0 0 g"    
+        "0 0 0 0"    
+    };
+
+    string[] map3 = new string[] // (0,1)
+    {
+        "0 0|0 0",
+        "_   _ _",
+        "0|0 0|0",
+        "_ _   _",
+        "0 0|0 0",
+        "_ _ _  ",
+        "0 0 0 0"
+    };
+
+    string[] map4 = new string[] // (1,0)
+    {
+        "0 0|0 0",
+        "  _ _ _",
+        "0|0 0|0",
+        "  _   _",
+        "0 0|0 0",
+        "  _ _  ",
+        "0 0 0 0"
+    };
+
+    string[] map5 = new string[] // (2, 2)
+    {
+        "0 0 0 0",  
+        "_ _   _",  
+        "0|0 0 0",  
+        "_ _   _", 
+        "0 0 0 0",  
+        "_ _ _  ",  
+        "0 0 0 0" 
     };
 
     public Dictionary<Vector2Int, List<Vector2Int>> walls;
@@ -69,6 +102,18 @@ public class MazeModule : MonoBehaviour
         else if (mazeTypePosition == new Vector2Int(3, 1))
         {
             selectedMap = map2;
+        }
+         else if (mazeTypePosition == new Vector2Int(0, 1))
+        {
+            selectedMap = map3;
+        }
+         else if (mazeTypePosition == new Vector2Int(1, 0))
+        {
+            selectedMap = map4;
+        }
+         else if (mazeTypePosition == new Vector2Int(2, 2))
+        {
+            selectedMap = map5;
         }
         walls = MazeWallParser.ParseWalls(selectedMap);
     }

@@ -76,7 +76,10 @@ public class MazeGridGenerator : MonoBehaviour
         {
             new Vector2Int(2, 3),
             new Vector2Int(3, 2),
-            new Vector2Int(3, 1)
+            new Vector2Int(3, 1),
+            new Vector2Int(0, 1),
+            new Vector2Int(1, 0),
+            new Vector2Int(2, 2),
         };
 
         Vector2Int randomPos = possiblePositions[Random.Range(0, possiblePositions.Length)];
