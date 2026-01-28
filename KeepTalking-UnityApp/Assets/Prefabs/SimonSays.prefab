@@ -884,7 +884,7 @@ MonoBehaviour:
   glowDuration: 0.8
   delayBetweenGlows: 0.4
   glowIntensity: 2.5
-  sequenceRepeatDelay: 10
+  sequenceRepeatDelay: 7.5
 --- !u!1 &8072793052558622862
 GameObject:
   m_ObjectHideFlags: 0

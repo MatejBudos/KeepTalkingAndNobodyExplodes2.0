@@ -20,7 +20,7 @@ public class SimonSequenceController : MonoBehaviour
     public float glowDuration = 0.8f;
     public float delayBetweenGlows = 0.4f;
     public float glowIntensity = 2.5f;
-    public float sequenceRepeatDelay = 10f;
+    public float sequenceRepeatDelay = 7.5f;
 
     private List<int> sequence = new List<int>();
     private bool inputEnabled = false;
@@ -64,7 +64,7 @@ public class SimonSequenceController : MonoBehaviour
         Debug.Log($"{gameObject.name} sequence: {string.Join(", ", sequence)}");
     }
 
-    void GenerateExpectedSequence()
+    public void GenerateExpectedSequence()
     {
         expectedSequence.Clear();
 
@@ -94,7 +94,7 @@ public class SimonSequenceController : MonoBehaviour
         {
             // Lock input while showing sequence
             inputEnabled = false;
-
+            GenerateExpectedSequence();
             // Play sequence
             foreach (int index in sequence)
             {
@@ -105,7 +105,6 @@ public class SimonSequenceController : MonoBehaviour
             }
 
             // Enable input after sequence finishes
-            GenerateExpectedSequence();
             inputEnabled = true;
 
             // Wait until it's time to replay
@@ -160,7 +159,9 @@ public class SimonSequenceController : MonoBehaviour
         // Check input
         if (tileIndex == expectedSequence[playerInputIndex])
         {
+            Debug.Log(">>>>Clicked on index: " + tileIndex + "expected " + expectedSequence[playerInputIndex]);
             playerInputIndex++;
+           
 
             // Sequence completed successfully
             if (playerInputIndex >= expectedSequence.Count)
@@ -174,14 +175,14 @@ public class SimonSequenceController : MonoBehaviour
         }
         else
         {
-            Debug.Log($"Wrong input on module '{gameObject.name}'!");
+            Debug.Log($"Wrong input on module '{gameObject.name}' with sequence: {string.Join(", ", sequence)}! and expectedseq: " + string.Join(", ", expectedSequence));
+            Debug.Log("Clicked on index: " + tileIndex + "but expected " + expectedSequence[playerInputIndex]);
+            Debug.Log("playerInputIndex was: " + playerInputIndex);
+
             BombManager.OnWrongClick?.Invoke();
 
             inputEnabled = false;
             playerInputIndex = 0;
-
-            // Replay sequence after strike
-            ResetSequenceTimer();
         }
     }
 

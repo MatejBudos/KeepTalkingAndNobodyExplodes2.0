@@ -32,6 +32,7 @@ public class Timer : MonoBehaviour
 
             currentMinutes = Mathf.FloorToInt(remainingTime / 60);
             currentSeconds = Mathf.FloorToInt(remainingTime % 60);
+            
             timerText.text = string.Format("{0:00}:{1:00}", currentMinutes, currentSeconds);  
         } 
     }
@@ -42,10 +43,16 @@ public class Timer : MonoBehaviour
         
     }
 
+    public bool IsZero()
+    {
+        return !stopped && currentMinutes == 0 && currentSeconds == 0;
+    }
+
     public void resetTimer()
     {
         stopped = true;
-        remainingTime = 150;
+    
+        remainingTime = 300;
         timerText.text = "";
     }
 }

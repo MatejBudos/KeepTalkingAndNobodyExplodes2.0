@@ -103,7 +103,7 @@ public class BombManager : MonoBehaviour
         {
             Transform container = shuffledContainers[i];
             int moduleIndex = UnityEngine.Random.Range(0, modulePrefabs.Count);
-
+            // int moduleIndex = 2;
             Instantiate(
                 modulePrefabs[moduleIndex],
                 container.position,
